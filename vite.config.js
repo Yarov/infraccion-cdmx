@@ -4,7 +4,8 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   base: '/infraccion-cdmx/',
   build: {
-    outDir: 'dist'
+    outDir: 'dist',
+    cssMinify: false
   },
   plugins: [react()]
 })
