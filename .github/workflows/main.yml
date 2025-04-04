@@ -1,5 +1,5 @@
 # Workflow para desplegar la aplicación Consulta Cívica CDMX a GitHub Pages
-name: Deploy Consulta Cívica CDMX to Pages
+name: Deploy
 
 on:
   # Se ejecuta en pushes a la rama principal
@@ -22,9 +22,6 @@ concurrency:
 jobs:
   # Job único para construir y desplegar
   build-and-deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
