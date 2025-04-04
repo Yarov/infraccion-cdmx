@@ -1,28 +1,23 @@
-# Workflow para desplegar la aplicación Consulta Cívica CDMX a GitHub Pages
 name: Deploy
 
 on:
-  # Se ejecuta en pushes a la rama principal
   push:
     branches: ["master"]
-  # Permite ejecutarlo manualmente desde la pestaña Actions
   workflow_dispatch:
 
-# Establece permisos del token GITHUB_TOKEN para permitir el despliegue a GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Permite solo un despliegue concurrente
 concurrency:
   group: "pages"
   cancel-in-progress: false
 
 jobs:
-  # Job único para construir y desplegar
   build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -39,13 +34,16 @@ jobs:
       - name: Build
         run: npm run build
 
+      # Copiar index.html como 404.html para SPA routing en GitHub Pages
+      - name: Copy index.html to 404.html
+        run: cp dist/index.html dist/404.html
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Subir solo la carpeta dist generada por Vite
           path: './dist'
 
       - name: Deploy to GitHub Pages
